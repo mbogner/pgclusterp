@@ -16,7 +16,7 @@ I haven't configured a VIP but for this it would require another haproxy server 
 
 ## Connect to postgresql
 
-The host haproxy1 exports port 5000 as postgresql port and maps it to 127.0.0.1 on the local machine. So simple target
+The host haproxy1 exports port 5000 as postgresql port and maps it to 127.0.0.1 on the local machine. So simply target
 your application at 127.0.0.1:5000. Default credentials are `postgres:postgres_password`.
 
 ## Quickstart
