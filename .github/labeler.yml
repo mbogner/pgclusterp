@@ -1,0 +1,22 @@
+legal:
+  - LICENSE.txt
+
+docs:
+  - README.md
+
+config:
+  - .editorconfig
+  - .github
+  - .gitignore
+
+etcd:
+  - etcd/**/*
+
+haproxy:
+  - haproxy/**/*
+
+pg:
+  - pg/**/*
+
+compose:
+  - docker-compose.yml

@@ -1,0 +1,90 @@
+version: "3.9"
+services:
+  etcd1:
+    build: ./etcd
+    image: mbopm/etcd:latest
+    hostname: etcd1
+    networks:
+      etcd:
+        ipv4_address: 172.18.0.100
+    environment:
+      IP: 172.18.0.100
+  etcd2:
+    image: mbopm/etcd:latest
+    hostname: etcd2
+    networks:
+      etcd:
+        ipv4_address: 172.18.0.101
+    environment:
+      IP: 172.18.0.101
+  etcd3:
+    image: mbopm/etcd:latest
+    hostname: etcd3
+    networks:
+      etcd:
+        ipv4_address: 172.18.0.102
+    environment:
+      IP: 172.18.0.102
+
+  pg1:
+    build: ./pg
+    image: mbopm/postgres-patroni:latest
+    hostname: pg1
+    volumes:
+      - pg1:/var/lib/postgresql/data
+    networks:
+      etcd:
+        ipv4_address: 172.18.0.50
+      pg:
+        ipv4_address: 172.19.0.50
+    environment:
+      IP: 172.19.0.50
+  pg2:
+    image: mbopm/postgres-patroni:latest
+    volumes:
+      - pg2:/var/lib/postgresql/data
+    hostname: pg2
+    networks:
+      etcd:
+        ipv4_address: 172.18.0.51
+      pg:
+        ipv4_address: 172.19.0.51
+    environment:
+      IP: 172.19.0.51
+
+  haproxy1:
+    build: ./haproxy
+    image: mbopm/haproxy:latest
+    ports:
+      - "127.0.0.1:7000:7000"
+      - "127.0.0.1:5000:5000"
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    networks:
+      pg:
+        ipv4_address: 172.19.0.150
+      haproxy:
+        ipv4_address: 172.20.0.150
+
+volumes:
+  pg1:
+  pg2:
+networks:
+  etcd:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.18.0.0/24"
+          gateway: "172.18.0.1"
+  pg:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.19.0.0/24"
+          gateway: "172.19.0.1"
+  haproxy:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.20.0.0/24"
+          gateway: "172.20.0.1"
