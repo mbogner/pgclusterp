@@ -33,7 +33,7 @@ docker compose up -d
 
 The purpose of this project is to take notes of the necessary steps to configure a patroni cluster. But instead of
 creating a bunch of VMs it relies on docker. If you bring the configs to proper VMs and distribute these over different
-server you can reuse the configs from this project.
+servers you can reuse the configs from this project.
 
-An alternative to docker would have been vragrant but still I didn't want to deal with the overhead of VMs just for
+An alternative to docker would have been vagrant but still I didn't want to deal with the overhead of VMs just for
 testing some configs.
